@@ -19,6 +19,7 @@ import myMath.Monom;
  *
  */
 public class Polynom implements Polynom_able{
+	//private static final String  = null;
 	private  LinkedList<Monom> save = new LinkedList<Monom>();
 
 	/**
@@ -26,7 +27,7 @@ public class Polynom implements Polynom_able{
 	 */
 
 	public static void main(String[] args) {
-		
+
 		Polynom a= new Polynom();
 		Monom m1=new Monom("3X");
 		a.add(m1);
@@ -37,11 +38,20 @@ public class Polynom implements Polynom_able{
 		m.derivative();
 		m.derivative();
 		//System.out.println(m);
-		
+
 		Polynom w= new Polynom ("X");		
 		Polynom n= new Polynom ("3X^2+5");	
 		System.out.println(w.equals(n));
-		System.out.println(w.root(1,-1,0.001));
+		System.out.println(w.root(0,1,0.001));
+		//Polynom b=new Polynom("2X+3X^3+6");
+		
+		String x="Times(3X,2)";
+		ComplexFunction q= new ComplexFunction();
+		function f=new ComplexFunction();
+		f=q.initFromString(x);
+		
+		f.toString();
+		
 
 
 
@@ -146,12 +156,12 @@ public class Polynom implements Polynom_able{
 	public void add(Monom m1) {
 		// TODO Auto-generated method stub
 		boolean in=false;
-		
+
 
 		for(int i=0;i<save.size()&&in==false;i++) {
 			Monom move=save.get(i);
 			if(m1.get_power()==move.get_power()) {
-				
+
 				Monom hadash=new Monom(m1.get_coefficient()+move.get_coefficient(),m1.get_power());
 				save.set(i,hadash );
 				in=true;
@@ -163,7 +173,7 @@ public class Polynom implements Polynom_able{
 			save.add(m1);
 
 		}
-		  
+
 
 
 
@@ -179,9 +189,9 @@ public class Polynom implements Polynom_able{
 		while(i.hasNext()) {
 			Monom c=new Monom((Monom)i.next());   
 			c.multipy(m);
-			
+
 			this.add(c);
-			
+
 		}
 
 
@@ -205,9 +215,9 @@ public class Polynom implements Polynom_able{
 
 
 		}
-		
+
 		Polynom polyanswer=new Polynom(answer);
-		
+
 		this.add(polyanswer);
 		this.substract(copyp1);
 
@@ -259,33 +269,33 @@ public class Polynom implements Polynom_able{
 
 	}
 	public double roothelp(double x0, double x1,double eps) {
-		
+
 		if (f(x0)==0) return x0;
 		if(f(x1)==0)return x1;
 		if(Math.abs(x1-x0)<eps&&(f(x1)+eps<0||(f(x0)+eps<0)))
-				return x1;
-		
-		
+			return x1;
+
+
 		double middle;
-			
-			if(x1>0&&(x0<0))
-				middle=x1-(Math.abs(x0)+Math.abs(x1))/2;
-			else
-			 middle=x0+(x1-x0)/2;
+
+		if(x1>0&&(x0<0))
+			middle=x1-(Math.abs(x0)+Math.abs(x1))/2;
+		else
+			middle=x0+(x1-x0)/2;
 		if(f(middle)*f(x1)>0)	
 			return roothelp( x0, middle, eps) ;
 		else
 			return roothelp( middle, x1, eps) ;
-			
-				
-			}
-		
-		
-	
+
+
+	}
+
+
+
 
 
 	@Override
-	public Polynom_able copy() {       //לבדוק מה בדיוק צריך לעשות-האם זו באמת הפונקציה
+	public Polynom_able copy() {     
 		// TODO Auto-generated method stub
 		Polynom a=new Polynom(this.toString());
 		return a;
@@ -363,7 +373,7 @@ public class Polynom implements Polynom_able{
 		String answer="";
 		for (int i = 0; i < save.size(); i++) {
 			String a=this.save.get(i).toString();
-			
+
 			Monom c=new Monom(a);
 			if(c.get_coefficient()!=0.0)
 			{
@@ -374,13 +384,13 @@ public class Polynom implements Polynom_able{
 			}	
 			else
 				answer=answer+" ";
-				
+
 		}
 		gather();
 
 		if(answer.charAt(0)=='+')
 			answer=answer.substring(1);
-		
+
 		if(answer.charAt(0)==' ')
 			answer="0";
 
@@ -401,8 +411,98 @@ public class Polynom implements Polynom_able{
 	}
 
 
-	public static Polynom_able parse(String s1) {    //ask
+	public static Polynom_able parse(String s1) {   
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public function initFromString(String s) {
+		// TODO Auto-generated method stub
+		//function a= helpinit(s);
+		function a=new ComplexFunction();
+		return a=helpinit(s);
+
+
+	}
+	public function helpinit(String s) {
+
+		ComplexFunction answer= new ComplexFunction();
+
+		String before="";
+		int i=0;
+		char move=s.charAt(i);
+		int move2=i;
+		while(move!='('&&move!=s.length()-1) {
+			before=before+move;
+			i++;
+			move=s.charAt(i);
+			move2=i;
+		}
+		System.out.println(move);
+		System.out.println(before);
+		if(move2==s.length()-1) {
+			Polynom x= new Polynom(s);
+			return x;
+
+		}
+		else {
+			if(before.equals("Plus")) {
+				answer.setSign(Operation.Plus);
+
+			}
+			else if(before.equals("Times")) {	
+				answer.setSign(Operation.Times);
+			}
+			else if(before.equals("Divid")) {
+				answer.setSign(Operation.Divid);
+			}
+			else if(before.equals("Max")) {
+				answer.setSign(Operation.Max); 
+			}
+			else if(before.equals("Min")) {
+				answer.setSign(Operation.Min); 
+			}
+			else if(before.equals("Comp")) {
+				answer.setSign(Operation.Comp);
+			}
+			else if(before.equals("None")) {
+				answer.setSign(Operation.None);
+			}
+			else if(before.equals("Error")) {
+				answer.setSign(Operation.Error); 
+			}
+
+			else
+			throw new RuntimeException("this is not a tipe of a complex function-operation is not correct");
+
+
+		}
+		if(s.charAt(s.length()-1)!=')')
+			throw new RuntimeException("this is not a tipe of a complex function-there is not (,) correct");
+		
+		System.out.println(move2+1);
+		System.out.println(s.length()-1);
+
+		s.substring(move2+1, s.length()-1);
+		int counter=0;
+		for(int j=s.length()-1;j>=0;j--) {
+			if((s.charAt(j)==',')&&(counter==0)) {
+				System.out.println(s.substring(0,j-1));
+				System.out.println(s.substring(j+1,s.length()-1));
+				answer.setLeft(helpinit(s.substring(0,j-1)));
+				answer.setRight(helpinit(s.substring(j+1,s.length()-1)));
+			}
+
+			if(s.charAt(j)==')')
+				counter++;
+			if(s.charAt(j)=='(')
+				counter--;
+		}
+	
+	return answer;
+
 }
+}
+
