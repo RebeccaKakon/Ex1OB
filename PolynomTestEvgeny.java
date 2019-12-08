@@ -1,6 +1,8 @@
 package myMath;
 
-	public class PolynomTestEvgeny {
+import javax.sound.midi.Synthesizer;
+
+public class PolynomTestEvgeny {
 		static int fails = 0;
 		public static void main(String[] args) {
 			try {test1();}catch (Exception e) {
@@ -132,7 +134,10 @@ package myMath;
 			add = (Polynom) p1.copy();
 			substract = (Polynom)p1.copy();
 			add.add(p2);
+		
+
 			substract.substract(p2);
+		
 			if (!add.equals(p3)) {
 				fails++;
 				System.out.println("fail add");

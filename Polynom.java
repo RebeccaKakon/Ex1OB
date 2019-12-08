@@ -297,8 +297,12 @@ public class Polynom implements Polynom_able{
 	@Override
 	public Polynom_able copy() {     
 		// TODO Auto-generated method stub
-		Polynom a=new Polynom(this.toString());
-		return a;
+		String a=this.toString();
+		Polynom b=new Polynom(a);
+		return b;
+		
+//		Polynom a=new Polynom(this.toString());
+//		return a;
 
 	}
 

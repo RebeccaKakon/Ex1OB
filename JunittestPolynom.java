@@ -91,17 +91,17 @@ class JunittestPolynom {
 
 
 	}
-//	@Test     //לא לשכוח לבדוק את זה 
-//
-//	 void testcopy() {   
-//		Polynom a= new Polynom("8.5X^8+2.22X");
-//		Polynom c=new Polynom(a.copy().toString());
-//		if(a.toString()==c.toString())		
-//			fail();
-//		
-//
-//
-//	}
-//	
+	@Test     //לא לשכוח לבדוק את זה 
+
+	 void testcopy() {   
+		Polynom a= new Polynom("8.5X^8+2.22X");
+		Polynom c=new Polynom(a.copy().toString());
+		if(a.toString()!=c.toString())		
+			fail();
+		
+
+
+	}
+	
 
 }
