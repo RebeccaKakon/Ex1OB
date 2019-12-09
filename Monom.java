@@ -57,6 +57,8 @@ public class Monom implements function{
 	// ***************** add your code below **********************
 
 	public Monom(String s) {		
+		String h=s.replace("x", "X");      //9/12
+		s=h;                                //9/12
 
 		String a="";
 		if(s.charAt(0)=='X')
@@ -205,8 +207,9 @@ public class Monom implements function{
 	}
 	@Override
 	public function copy() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO Auto-generated method stub 
+	    function b=new Monom(this.get_coefficient(),this.get_power());
+		return b;
 	}
 
 

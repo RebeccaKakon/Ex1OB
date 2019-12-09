@@ -52,6 +52,51 @@ public class ComplexFunction implements function {
 		}
 
 	}
+	public ComplexFunction(Operation sign, function f1, function f2) {
+		this.setSign(sign);
+		this.setLeft(f1);
+		this.setRight(f2);
+		
+	}
+	public ComplexFunction(function f1) {
+		this.setSign(Operation.None);
+		this.setLeft(f1);
+	}
+	public ComplexFunction(String sign,function f1, function f2) {
+		if(sign.equals("plus")) {
+			this.setSign(Operation.Plus);
+
+		}
+		else if(sign.equals("mul")) {	
+			this.setSign(Operation.Times);
+		}
+		else if(sign.equals("div")) {
+			this.setSign(Operation.Divid);
+		}
+		else if(sign.equals("max")) {
+			this.setSign(Operation.Max); 
+		}
+		else if(sign.equals("min")) {
+			this.setSign(Operation.Min); 
+		}
+		else if(sign.equals("comp")) {
+			this.setSign(Operation.Comp);
+		}
+		else if(sign.equals("none")) {
+			this.setSign(Operation.None);
+		}
+		else if(sign.equals("error")) {
+			this.setSign(Operation.Error); 
+		}
+
+		else
+			throw new RuntimeException("this is not a tipe of a complex function-operation is not correct");
+		
+		this.setLeft(f1);
+		this.setRight(f2);
+
+		
+	}
 
 	public void mul(function f1) {
 		if(this.sign==Operation.None)
@@ -198,7 +243,7 @@ public class ComplexFunction implements function {
 		//System.out.println(q4);
 		//System.out.println(q3);
 		q4.mul(x);
-		System.out.println(q4);
+		//System.out.println(q4);
 		
 
 		f3=q4.copy();
@@ -207,13 +252,13 @@ public class ComplexFunction implements function {
 		//System.out.println(q4.f(2));
 
 		//System.out.println(q4);
-		System.out.println(q4.equals(f3));
+//		System.out.println(q4.equals(f3));
 
 
 
 		//		
-				System.out.println("f2(1)-   "+f2.f(1));
-				System.out.println("f3(1)-   "+f3.f(1));
+//				System.out.println("f2(1)-   "+f2.f(1));
+//				System.out.println("f3(1)-   "+f3.f(1));
 		//		
 				
 		
@@ -229,8 +274,39 @@ public class ComplexFunction implements function {
 				ComplexFunction B= new ComplexFunction(cc,Operation.Plus,dd);
 				
 				B.comp(A);
-				System.out.println(B);
-				System.out.println(B.f(0.5));
+//				System.out.println(B);
+//				System.out.println(B.f(0.5));
+				
+				
+				
+				String t="Times(Divid(Times(8,8),4x^2),Divid(10,5))";
+				//System.out.println(p);
+				ComplexFunction t2= new ComplexFunction();
+				function ft=new ComplexFunction();
+				ft=t2.initFromString(t);
+				System.out.println(ft);
+				System.out.println(ft.f(1));
+				//System.out.println(ft.f(3));
+				
+				String hh="x^2";
+				String newnew =hh.replace("x","X");
+				//System.out.println(newnew);
+				hh=newnew;
+				//System.out.println(hh);
+				
+				
+				String qq = "Times(Divid(Times(8,8),4x^2),Divid(10,5))";
+				
+					
+				ComplexFunction p7=new ComplexFunction();
+				System.out.println(p7);
+				System.out.println(p7.f(1));
+					
+					
+
+				
+				
+				
 				
 				
 				
@@ -246,9 +322,13 @@ public class ComplexFunction implements function {
 		// TODO Auto-generated method stub
 		double left;
 		double right;
+		if(this.left==null) return  Double.POSITIVE_INFINITY;	 
 
 		left=this.left.f(x) ;
+		if(this.right==null) return left;
+		else
      	right=this.right.f(x);
+		
 
 
 		if(this.sign==Operation.Plus) {
@@ -277,6 +357,10 @@ public class ComplexFunction implements function {
 		else if(this.sign==Operation.None) {
 			return left;
 		}
+		else if(this.sign==Operation.Error) {
+			return Double.POSITIVE_INFINITY;
+		}
+
 
 
 
@@ -419,19 +503,23 @@ public class ComplexFunction implements function {
 		return a;
 	}
 
-	public boolean equals (function f) {
+	public boolean equals (Object f) {
+		
+		if (!(f instanceof function))
+			return false;
+		else {
 
 		double x=10;
 		while(x!=100) {
 
 			double fthis=this.f(x);
-			double ff=f.f(x);
-			System.out.println(x+","+fthis+","+ff);
+			double ff=((ComplexFunction)f).f(x);
 			if(fthis!=ff)
 				return false;
 			x=x+1;
 		}
 		return true;
+		}
 	}
 
 }

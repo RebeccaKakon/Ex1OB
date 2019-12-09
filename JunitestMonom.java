@@ -12,7 +12,7 @@ class JunitestMonom {
 
 	void test1() {
 		System.out.println("*****  Test1:  *****");
-		String[] monoms = { "2","-X","-3.2X^2","0"};
+		String[] monoms = { "2","-x","-3.2x^2","0"};
 		for(int i=0;i<monoms.length;i++) {
 			Monom m = new Monom(monoms[i]);
 			String s = m.toString();
@@ -66,7 +66,7 @@ class JunitestMonom {
  void testderuvative() {   //+ 
 		
 		Monom a=new Monom(4.2,3);
-		Monom b=new Monom ("4.2X^3");
+		Monom b=new Monom ("4.2x^3");
 		a.derivative();
 		b.derivative();
 		if(!a.equals(b))

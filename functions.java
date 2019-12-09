@@ -35,4 +35,5 @@ public interface functions extends Collection<function>{
  * Note: is the file id not readable or in wrong format should use default values. 
  */
 	public void drawFunctions(String json_file);
+
 }

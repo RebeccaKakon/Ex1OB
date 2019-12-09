@@ -47,7 +47,7 @@ class JunittestPolynom {
 	@Test
 
 	 void testderivative() {   
-		Polynom p= new Polynom("2X^2+4X");
+		Polynom p= new Polynom("2X^2+4x");
 		Polynom p1= new Polynom("4X+4");
 
 		p.derivative();
@@ -59,7 +59,7 @@ class JunittestPolynom {
 	@Test
 
 	 void testroot() {   
-		Polynom p= new Polynom("2X^2+4X");
+		Polynom p= new Polynom("2x^2+4X");
 		p.derivative();
 		double extreme =p.root(-2, 2, 0.00001);
 		if(extreme!=-1)
@@ -77,7 +77,7 @@ class JunittestPolynom {
 
 	@Test
 	 void testarea() {  
-		Polynom a=new Polynom("-X^2+3");
+		Polynom a=new Polynom("-x^2+3");
 		double area1=a.area(-2,0, 0.0001);
 		double area2=a.area(0, 2, 0.0001);
 		if(area1-area2>0.0001)
@@ -91,12 +91,12 @@ class JunittestPolynom {
 
 
 	}
-	@Test     //לא לשכוח לבדוק את זה 
+	@Test      
 
 	 void testcopy() {   
 		Polynom a= new Polynom("8.5X^8+2.22X");
 		Polynom c=new Polynom(a.copy().toString());
-		if(a.toString()!=c.toString())		
+		if(a.toString()==c.toString())		
 			fail();
 		
 
