@@ -1,7 +1,7 @@
 # Ex1OB
 
 This project represent four calsses: Polynom, Monom, Complex-Function, and function Gui.
-Our project contains Junit test for all of our classes.
+Our project contains Junit test for all of our classes, and a java doc
 Monom:
  In our Monom's class, we have defined monom by the following features:
  -The coefficient of X can only be a decimal number (can also be without a coefficient) 
