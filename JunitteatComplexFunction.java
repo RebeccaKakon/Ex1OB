@@ -95,21 +95,7 @@ class JunitteatComplexFunction {
 			fail();
 		
 	}
-	@Test
-	void testcomp() {
-		Polynom a=new Polynom ("2X^2");
-		Polynom b=new Polynom("-4X^3");
-		
-		
-		ComplexFunction A= new ComplexFunction(a,Operation.Plus,b);
-		ComplexFunction B= new ComplexFunction(b,Operation.Plus,a);
-		if(A.f(3)
-		
-
-
-
-
-	}
+	
 }
 
 

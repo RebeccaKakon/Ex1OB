@@ -1,5 +1,7 @@
 package myMath;
 
+import static org.junit.Assert.fail;
+
 import java.util.Iterator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -23,10 +25,10 @@ import org.junit.jupiter.api.Test;
 class Functions_GUITest {
 	public static void main(String[] a) {
 		functions data = FunctionsFactory();
-	//	int w=1000, h=600, res=200;
-	//	Range rx = new Range(-10,10);
-	//	Range ry = new Range(-5,15);
-//		data.drawFunctions(w,h,rx,ry,res);
+		int w=1000, h=600, res=200;
+		Range rx = new Range(-10,10);
+		Range ry = new Range(-5,15);
+		data.drawFunctions(w,h,rx,ry,res);
 		String file = "function_file.txt";
 		String file2 = "function_file2.txt";
 		try {
@@ -55,28 +57,80 @@ class Functions_GUITest {
 	//	fail("Not yet implemented");
 	}
 
-	//@Test
+	@Test
 	void testInitFromFile() {
-	//	fail("Not yet implemented");
-	}
-
-	//@Test
-	void testSaveToFile() {
+		Functions_GUI a=new Functions_GUI();
+		Range x=new Range(-10,10);
+		Polynom s= new Polynom ("x^2");
+		Polynom h= new Polynom ("X^2+2");
+		Polynom r= new Polynom ("X^2+3");
+		Polynom v= new Polynom ("X^2+4");
+		Polynom k= new Polynom ("2x^3+2x^2");
+		Polynom p= new Polynom ("x^4+2x+5");
+		a.add(s);
+		a.add(h);
+		a.add(r);
+		a.add(v);
+		a.add(k);
+		a.add(p);
+	
+		String out="testdrawing.txt";
+		try {
+		a.saveToFile(out);
+		Functions_GUI b=new Functions_GUI();
+		b.initFromFile("C:/Users/dalia/eclipse-workspace/secondyear/testdrawing.txt");
+		}
+		catch(Exception e) {
+			fail();
+		}
 		
-		
-	}
 
-	//@Test
-	void testDrawFunctions() {
-		//_data.drawFunctions();
-	//	fail("Not yet implemented");
 	}
 
 	@Test
-	void testDrawFunctionsIntIntRangeRangeInt() {
-		_data.drawFunctions("GUI_params.txt");
-		//fail("Not yet implemented");
+	void testSaveToFile() {
+		Functions_GUI a=new Functions_GUI();
+		Range x=new Range(-10,10);
+		Polynom s= new Polynom ("x^2");
+		Polynom h= new Polynom ("X^2+2");
+		Polynom r= new Polynom ("X^2+3");
+		Polynom v= new Polynom ("X^2+4");
+		Polynom k= new Polynom ("2x^3+2x^2");
+		Polynom p= new Polynom ("x^4+2x+5");
+		a.add(s);
+		a.add(h);
+		a.add(r);
+		a.add(v);
+		a.add(k);
+		a.add(p);
+	
+		String out="testdrawing.txt";
+		try {
+		a.saveToFile(out);
+		Functions_GUI b=new Functions_GUI();
+		b.initFromFile("C:/Users/dalia/eclipse-workspace/secondyear/testdrawing.txt");
+		}
+		catch(Exception e) {
+			fail();
+		}
+		
+
 	}
+
+		
+	
+
+	//@Test
+	//void testDrawFunctions() {
+		//_data.drawFunctions();
+	//	fail("Not yet implemented");
+	//}
+
+//	@Test
+//	void testDrawFunctionsIntIntRangeRangeInt() {
+//		_data.drawFunctions("GUI_params.txt");
+//		//fail("Not yet implemented");
+//	}
 	public static functions FunctionsFactory() {
 		functions ans = new Functions_GUI();
 		String s1 = "3.1 +2.4x^2 -x^4";

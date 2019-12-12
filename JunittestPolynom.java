@@ -36,12 +36,36 @@ class JunittestPolynom {
 	@Test
 
 	 void multtest() {    
-		Polynom p=new Polynom("3X^2+4X+2");
-		Polynom a=new Polynom("2");
-		p.multiply(a);
-		Polynom p2=new Polynom("6X^2+8X+4");
-		if(!p2.equals(p))
-			fail();
+		System.out.println("******  Test6 equals:  ******");
+		String[][] polynoms = {{"3X^2","-6X^3","9X","-2"},
+				{"X","5X","0","-5"} , {"3.00000001X^2","-5.9999999999X^3","9.000000001X","-2"}};
+		Polynom p1 = new Polynom();
+		Polynom p2 = new Polynom();
+		Polynom p3 = new Polynom();
+		for (int i = 0; i < polynoms[0].length; i++) {
+			Monom temp = new Monom(polynoms[0][i]);
+			p1.add(temp);
+		}		
+		for (int i = 0; i < polynoms[1].length; i++) {
+			Monom temp = new Monom(polynoms[1][i]);
+			p2.add(temp);
+		}
+		
+		for (int i = 0; i < polynoms[2].length; i++) {
+			Monom temp = new Monom(polynoms[2][i]);
+			p3.add(temp);
+		}
+
+		if (p1.equals(p2)) {
+			
+			System.out.println("fail equals");
+		}
+		
+		if ( !p1.equals(p3)) {
+			
+			System.out.println("fail equals no numeric checks");
+		}
+		
 	}
 
 	@Test
@@ -100,6 +124,30 @@ class JunittestPolynom {
 			fail();
 		
 
+
+	}
+	@Test      
+
+	 void testinitfromstring() {   
+		Polynom a= new Polynom();
+		function f=new Polynom();
+		f=a.initFromString("2x^2+3x+5");
+		System.out.println(f);
+		Polynom x=new Polynom("2x^2+3x+5");
+		System.out.println(x);
+		if(f.equals(x)==false)
+			fail();
+	
+	}
+	
+	@Test
+	void testequalObject() {    
+
+		Polynom a=new Polynom("-18x^6");
+		Object b=new Polynom ("-18x^6");
+
+		if(!a.equals(b))
+			fail();
 
 	}
 	

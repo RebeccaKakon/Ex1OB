@@ -1,7 +1,19 @@
 package myMath;
 
 import static org.junit.Assert.fail;
+
 import static org.junit.jupiter.api.Assertions.fail;
+/**
+ * 
+ * This class represents a ComplexFunction 
+ * this class will create CF that are contains Operation and a function.
+ * a function can be: Polynom , Monom or a CF.
+ * In this way we will describe many function, and drawing them.
+ * 
+ * @author shaharivka
+ *
+ 
+ */
 
 public class ComplexFunction implements function {
 
@@ -29,11 +41,21 @@ public class ComplexFunction implements function {
 		left=right=null;
 		sign=Operation.None;
 	}
+	/**
+	 * Builts a CF 
+	 * @param left- left function
+	 * @param sign- the operation between the two function
+	 * @param right-right function
+	 */
 	public ComplexFunction(function left,Operation sign,function right) { 
 		this.left=left;
 		this.right=right;
 		this.sign=sign;
 	}
+	/**
+	 * Plus between this function and the receiving function
+	 * @param f1
+	 */
 	public void plus(function f1) {
 		if(this.sign==Operation.None)
 		{
@@ -52,40 +74,58 @@ public class ComplexFunction implements function {
 		}
 
 	}
+	/**
+	 * Builts a CF 
+	 * @param left- left function
+	 * @param sign- the operation between the two function
+	 * @param right-right function
+	 * 
+	 */
 	public ComplexFunction(Operation sign, function f1, function f2) {
 		this.setSign(sign);
 		this.setLeft(f1);
 		this.setRight(f2);
 		
 	}
+	/**
+	 * Builts a CF 
+	 * @param f1- function
+	 * 
+	 */
 	public ComplexFunction(function f1) {
 		this.setSign(Operation.None);
 		this.setLeft(f1);
 	}
+	/**
+	 * Builts a CF
+	 * @param left- left function
+	 * @param sign- the operation between the two function
+	 * @param right-right function
+	 */
 	public ComplexFunction(String sign,function f1, function f2) {
-		if(sign.equals("plus")) {
+		if(sign.equals("plus")||sign.equals("Plus")) {
 			this.setSign(Operation.Plus);
 
 		}
-		else if(sign.equals("mul")) {	
+		else if(sign.equals("mul")||sign.equals("Times")||sign.equals("Mul")) {	
 			this.setSign(Operation.Times);
 		}
-		else if(sign.equals("div")) {
+		else if(sign.equals("div")||sign.equals("Divid")||sign.equals("Div")) {
 			this.setSign(Operation.Divid);
 		}
-		else if(sign.equals("max")) {
+		else if(sign.equals("max")||sign.equals("Max")) {
 			this.setSign(Operation.Max); 
 		}
-		else if(sign.equals("min")) {
+		else if(sign.equals("min")||sign.equals("Min")) {
 			this.setSign(Operation.Min); 
 		}
-		else if(sign.equals("comp")) {
+		else if(sign.equals("comp")||sign.equals("Comp")) {
 			this.setSign(Operation.Comp);
 		}
-		else if(sign.equals("none")) {
+		else if(sign.equals("none")||sign.equals("None")) {
 			this.setSign(Operation.None);
 		}
-		else if(sign.equals("error")) {
+		else if(sign.equals("error")||sign.equals("Error")) {
 			this.setSign(Operation.Error); 
 		}
 
@@ -97,6 +137,9 @@ public class ComplexFunction implements function {
 
 		
 	}
+	/**
+	 * Mul between this function and the receiving function
+	 */
 
 	public void mul(function f1) {
 		if(this.sign==Operation.None)
@@ -111,6 +154,9 @@ public class ComplexFunction implements function {
 			this.right=f1;
 		}
 	}
+	/**
+	 * Div between this function and the receiving function
+	 */
 
 	public void div(function f1) {
 		if(this.sign==Operation.None)
@@ -127,6 +173,9 @@ public class ComplexFunction implements function {
 
 
 	}
+	/**
+	 * Max between this function and the receiving function
+	 */
 
 	public void max(function f1) {
 		if(this.sign==Operation.None)
@@ -142,6 +191,9 @@ public class ComplexFunction implements function {
 		}
 
 	}
+	/**
+	 * Min between this function and the receiving function
+	 */
 
 	public void min(function f1) {
 		if(this.sign==Operation.None)
@@ -157,6 +209,10 @@ public class ComplexFunction implements function {
 		}
 
 	}
+	/**
+	 * Comp on this function with the receiving function
+	 * @param f1- function
+	 */
 
 	public void comp(function f1) {	
 		if(this.sign==Operation.None)
@@ -177,6 +233,9 @@ public class ComplexFunction implements function {
 		return this.sign;
 
 	}
+	/**
+	 * @return a String that represent our CF
+	 */
 
 	public String toString() {
 		return this.sign+"("+this.left+","+this.right+")";
@@ -185,138 +244,45 @@ public class ComplexFunction implements function {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Polynom x=new Polynom("3X+5");
-		Polynom x2=new Polynom("3X+5");
-		String a="mul(sub(X+2,4X+5),div(4X,X)";
-		function b=null;
-		//b.initFromString(a);
-		ComplexFunction c= new ComplexFunction();
-		ComplexFunction c2= new ComplexFunction();
-		c2.sign=Operation.Divid;
-		c2.left=x;
-		c2.right=x2;
-
-		//System.out.println(c.toString());
-
-		ComplexFunction c3= new ComplexFunction();
-		ComplexFunction c4= new ComplexFunction();
-		c3.sign=Operation.Comp;
-		c3.left=x;
-		c3.right=x2;
-		c4.sign=Operation.Divid;
-		c4.left=c2;
-		c4.right=x;
-		//System.out.println(c4.toString());
-
-		//System.out.println("***");
-
-		String p="Divid(Divid(3X,4),2)";
-		//System.out.println(p);
-		ComplexFunction q= new ComplexFunction();
+	
+		
+		Polynom p=new Polynom();
+		function pp=new ComplexFunction();
+		pp=p.initFromString("3x");
+		System.out.println("pp="+pp);
+		String s="Divid(plus(3,5x),5)";
 		function f=new ComplexFunction();
-		f=q.initFromString(p);     //init does not returns a good string
-
-
-		//System.out.println(f.toString());
-
-		String p2="Times(Divid(3X,2),Plus(X,2))";
-		ComplexFunction q2= new ComplexFunction();
-		function f2=new ComplexFunction();
-		f2=q2.initFromString(p2);
-		//		System.out.println(f2.toString());
-		String p5="Times(Divid(3X,2),2)";
-		ComplexFunction q5= new ComplexFunction();
-		function f4=new ComplexFunction();
-		f4=q5.initFromString(p5);
-		
-		//System.out.println("f4(1)="+f4.f(1));
-
-		function f3=new ComplexFunction();
-
-		//		System.out.println(f3);
-		//		System.out.println(f2.equals(f3));
-		//		System.out.println(f3);
-		//		
-
-		ComplexFunction x3=new ComplexFunction(x,Operation.Divid,x);
-		ComplexFunction q4= new ComplexFunction(x,Operation.Plus,x3);
-		//System.out.println(q4);
-		//System.out.println(q3);
-		q4.mul(x);
-		//System.out.println(q4);
-		
-
-		f3=q4.copy();
-		//System.out.println(f3);
-		//System.out.println(f3.f(2));
-		//System.out.println(q4.f(2));
-
-		//System.out.println(q4);
-//		System.out.println(q4.equals(f3));
-
-
-
-		//		
-//				System.out.println("f2(1)-   "+f2.f(1));
-//				System.out.println("f3(1)-   "+f3.f(1));
-		//		
-				
+		ComplexFunction q= new ComplexFunction();
+		System.out.println(q);
+		f=q.initFromString(s);
+		System.out.println(f);
 		
 				
-				
+String www="plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0)";
+ComplexFunction t2w= new ComplexFunction();
+function ftw=new ComplexFunction();
+ftw=t2w.initFromString(www);					
+System.out.println(ftw);
 
-				Polynom aa=new Polynom ("2X^2");
-				Polynom bb=new Polynom("-4X^3");
-				Polynom cc=new Polynom ("8X^2");
-				Polynom dd=new Polynom("3X");
-				
-				ComplexFunction A= new ComplexFunction(aa,Operation.Plus,bb);
-				ComplexFunction B= new ComplexFunction(cc,Operation.Plus,dd);
-				
-				B.comp(A);
-//				System.out.println(B);
-//				System.out.println(B.f(0.5));
-				
-				
-				
-				String t="Times(Divid(Times(8,8),4x^2),Divid(10,5))";
-				//System.out.println(p);
-				ComplexFunction t2= new ComplexFunction();
-				function ft=new ComplexFunction();
-				ft=t2.initFromString(t);
-				System.out.println(ft);
-				System.out.println(ft.f(1));
-				//System.out.println(ft.f(3));
-				
-				String hh="x^2";
-				String newnew =hh.replace("x","X");
-				//System.out.println(newnew);
-				hh=newnew;
-				//System.out.println(hh);
-				
-				
-				String qq = "Times(Divid(Times(8,8),4x^2),Divid(10,5))";
-				
-					
-				ComplexFunction p7=new ComplexFunction();
-				System.out.println(p7);
-				System.out.println(p7.f(1));
-					
+       ComplexFunction t= new  ComplexFunction();
+       String b="Plus(null,3x)";
+       t.initFromString(b);
+       System.out.println(t);
+
+
 					
 
-				
-				
-				
-				
-				
-				
-				
 				
 				
 
 
 
 	}
+	/**
+	 * Calculates the function value at a point
+	 *  @param x -the point its Calculates
+	 * @return f - double value
+	 */
 	@Override
 	public double f(double x) {
 		// TODO Auto-generated method stub
@@ -372,6 +338,11 @@ public class ComplexFunction implements function {
 
 		return 0;
 	}
+	/**
+	 * receives a String and built a type of function from this string
+	 *  @param s -String
+	 *  @return -function that represent this String
+	 */
 	@Override
 	public function initFromString(String s) {
 		// TODO Auto-generated method stub
@@ -381,6 +352,10 @@ public class ComplexFunction implements function {
 
 
 	}
+	/**
+	 * helps initfromstring
+	 * @param s-string
+	 */
 	public function helpinit(String s) {
 
 
@@ -404,37 +379,36 @@ public class ComplexFunction implements function {
 			}
 
 		}
-		//System.out.println(move);
-		//System.out.println(before);
+		
 		if(move2==s.length()-1) {
 			Polynom x= new Polynom(s);
 			return x;
 
 		}
 		else {
-			if(before.equals("Plus")) {
+			if(before.equals("plus")||before.equals("Plus")) {
 				answer.setSign(Operation.Plus);
 
 			}
-			else if(before.equals("Times")) {	
+			else if(before.equals("mul")||before.equals("Times")) {	
 				answer.setSign(Operation.Times);
 			}
-			else if(before.equals("Divid")) {
+			else if(before.equals("div")||before.equals("Div")||before.equals("Divid")) {
 				answer.setSign(Operation.Divid);
 			}
-			else if(before.equals("Max")) {
+			else if(before.equals("max")||before.equals("Max")) {
 				answer.setSign(Operation.Max); 
 			}
-			else if(before.equals("Min")) {
+			else if(before.equals("min")||before.equals("Min")) {
 				answer.setSign(Operation.Min); 
 			}
-			else if(before.equals("Comp")) {
+			else if(before.equals("comp")||before.equals("Comp")) {
 				answer.setSign(Operation.Comp);
 			}
-			else if(before.equals("None")) {
+			else if(before.equals("none")||before.equals("None")) {
 				answer.setSign(Operation.None);
 			}
-			else if(before.equals("Error")) {
+			else if(before.equals("error")||before.equals("Error")) {
 				answer.setSign(Operation.Error); 
 			}
 
@@ -446,10 +420,7 @@ public class ComplexFunction implements function {
 			if(s.charAt(s.length()-1)!=')')
 				throw new RuntimeException("this is not a tipe of a complex function-there is not (,) correct");
 
-			//System.out.println(move2+1);
-			//System.out.println(s.length()-1);
-			//System.out.println(move2+1);
-			//System.out.println(s.length());
+			
 			String save=s.substring(move2+1, s.length()-1);
 
 			if(save.charAt(save.length()-1)==' '||save.charAt(save.length()-1)==',')
@@ -467,14 +438,7 @@ public class ComplexFunction implements function {
 					String right=save.substring(j+1);
 					//try {
 					answer.setRight(helpinit(right));
-					//}
-					//					catch(Exception e) {
-					//						if(this.sign==Operation.None) {
-					//							answer.setRight(null);
-					//						}
-					//							
-					//					}
-
+					
 
 				}
 
@@ -495,6 +459,9 @@ public class ComplexFunction implements function {
 		return answer;
 
 	}
+	/**
+	 * Copy this CF and returns it
+	 */
 	@Override
 	public function copy() {
 		// TODO Auto-generated method stub
@@ -502,6 +469,15 @@ public class ComplexFunction implements function {
 		function a= initFromString(b);
 		return a;
 	}
+	/**
+	 * 
+	 * 
+	 * checking if this CF and the receiving Object are equals
+	 * @param p1- Object
+	 * @return - true/false
+	 */
+	 
+	 
 
 	public boolean equals (Object f) {
 		

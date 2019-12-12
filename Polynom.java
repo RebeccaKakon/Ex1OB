@@ -1,5 +1,7 @@
 package myMath;
 
+import static org.junit.Assert.fail;
+
 import java.nio.channels.Pipe;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,8 +16,14 @@ import myMath.Monom;
  * 1. Riemann's Integral: https://en.wikipedia.org/wiki/Riemann_integral
  * 2. Finding a numerical value between two values (currently support root only f(x)=0).
  * 3. Derivative
+ * right input("3X^2+5X+8","3.22X+5","2X^4+8+2")
+ *  wrong input("(3X+5)","2x","3X^3.2")
+ *   Defined by a collection of monomes in a linked list,
+ *    in our function we defined the Polynom by the following features: 
+ *    - The polynomial does not work with the '/ ' operation 
+ *    -The polynomial does not contain the characters: ")", "("
  * 
- * @author Boaz
+ * @author shaharivka
  *
  */
 public class Polynom implements Polynom_able{
@@ -27,35 +35,33 @@ public class Polynom implements Polynom_able{
 	 */
 
 	public static void main(String[] args) {
-
+		
+//		String p="3X^2-6X^3+9X-2";
+//		Polynom pp= new Polynom (p);
+//		Double rootp=pp.root(0, 1, 0.0001);
+//		System.out.println(rootp);
+//		
+		
 		Polynom a= new Polynom();
-		Monom m1=new Monom("3X");
-		a.add(m1);
-		//System.out.println(a);
-		Polynom m=new Polynom("2X");
-		m.derivative();
-		//System.out.println(m);
-		m.derivative();
-		m.derivative();
-		//System.out.println(m);
+		function f=new Polynom();
+		f=a.initFromString("2x^2+3x+5");
+		System.out.println(f);
+		Polynom x=new Polynom("2x^2+3x+5");
+		System.out.println(x);
+		if(f.equals(x)==false)
+			System.out.println("noe equal");
+		
+		double xx=1.99999999999999999999999;
+		System.out.println(xx);
+		System.out.println((double)(Math.round(xx/16)));
 
-		Polynom w= new Polynom ("X");		
-		Polynom n= new Polynom ("3X^2+5");	
-		System.out.println(w.equals(n));
-		System.out.println(w.root(0,1,0.001));
-		//Polynom b=new Polynom("2X+3X^3+6");
-		
-		String x="Times(3X,2)";
-		ComplexFunction q= new ComplexFunction();
-		function f=new ComplexFunction();
-		f=q.initFromString(x);
-		
-		f.toString();
-		
 
 
 
 	}
+	/*
+	 * A constructor that built a new Polynom- as zero 
+	 */
 
 
 	public Polynom() 
@@ -79,6 +85,10 @@ public class Polynom implements Polynom_able{
 			throw new RuntimeException ("this is not a type of Polynom");
 
 	}
+	/*
+	 * Helps us to build Polynom(String) function
+	 * @param s: is a string represents a Polynom
+	 */
 
 	public  void helppolynom (String s) {
 
@@ -128,6 +138,13 @@ public class Polynom implements Polynom_able{
 
 
 	@Override
+	/**
+	 *  Calculates the function value at a point
+	 *  @param x -the point its Calculates
+	 *  @return the value 
+	 *  
+
+	 */
 	public double f(double x) {
 		// TODO Auto-generated method stub
 
@@ -139,6 +156,10 @@ public class Polynom implements Polynom_able{
 		}
 		return sum;
 	}
+	/**
+	 * Adding a Polynom to this Polynom
+	 */
+	
 
 	@Override
 	public void add(Polynom_able p1) {
@@ -149,11 +170,19 @@ public class Polynom implements Polynom_able{
 			Monom c=((Monom)i.next());
 			this.add(c);
 		}
+		sort();         
 
 	}
+	/**
+	 * @param p1- Monom
+	 * Adding a Monom to this Polynom
+	 * 
+	 */
 
 	@Override
-	public void add(Monom m1) {
+	public void add(Monom m1) 
+	{
+		this.sort();
 		// TODO Auto-generated method stub
 		boolean in=false;
 
@@ -174,10 +203,15 @@ public class Polynom implements Polynom_able{
 
 		}
 
-
+		this.sort();
 
 
 	}
+	/*
+	 * @param p1- Polynom
+	 * Substract a Polynom from this Polynom
+	 * 
+	 */
 
 
 
@@ -193,14 +227,21 @@ public class Polynom implements Polynom_able{
 			this.add(c);
 
 		}
+		sort();        
 
 
 
 	}
+	/**
+	 * @param p1- Polynom
+	 * Multiply a Polynom with this Polynom
+	 */
 
 	@Override
 	public void multiply(Polynom_able p1) {
 		// TODO Auto-generated method stub
+		sort();
+
 
 		Polynom copyp1=this.copyy(this);
 		Iterator<Monom> j=p1.iteretor();
@@ -220,34 +261,77 @@ public class Polynom implements Polynom_able{
 
 		this.add(polyanswer);
 		this.substract(copyp1);
-
+		//System.out.println(this);
+		sort();     //11/12
+		//System.out.println(this);
 
 	}
+	/**
+	 * Copy the receiving Polynom and returns it
+	 * @param p- Polynom
+	 * @return - Polynom
+	 */
 
 	public Polynom copyy (Polynom p) {
 		Polynom a=new Polynom(p.toString());
 		return a;
 	}
+	/**
+	 * 
+	 * checking if this Polynom and the receiving Polynom are equals
+	 * @param p1- Polynom
+	 * @return - true/false
+	 */
+	 
+	
 
 	@Override
-	public boolean equals(Polynom_able p1) {       
-		// TODO Auto-generated method stub
-
-		Iterator placep1=p1.iteretor();
+	public boolean equals(Polynom_able p1) 
+	{      	
+		
+		sort();
+		Iterator<Monom> placep1=p1.iteretor();
 		int place=0;
-		while(placep1.hasNext()&& place<save.size()) {
-			Monom c=((Monom)placep1.next());
 
+		while(placep1.hasNext()&& place<save.size()) 
+		{
+			Monom c=((Monom)placep1.next());
 			if(!save.get(place).equals(c))
 				return false;
 			place++;	
 		}
-		if(place<save.size()&&!placep1.hasNext()) return false;
-		else 
-			if(place>save.size()&&placep1.hasNext()) return false;
 
+		//System.out.println(place);
+		if(placep1.hasNext())
+			//System.out.println("has next");
+
+			if(place==save.size())
+				if(placep1.hasNext())
+					return false;
+				else 
+					return true;
 		return true;
+
+
 	}
+	/**
+	 * checking if this Polynom and the receiving Polynom are equals
+	 * @param p1- Polynom
+	 * @return - true/false
+	 */
+	@Override
+	public boolean equals(Object p1) {
+		if(p1 instanceof Polynom_able)
+			return this.equals((Polynom)p1);
+		else
+			throw new RuntimeException ("not a type of Polynom");
+
+
+	}
+	/**
+	 * Checks if this Polynom is the zere Polynom
+	 *  @return - true/false
+	 */
 
 	@Override
 	public boolean isZero() {
@@ -259,20 +343,36 @@ public class Polynom implements Polynom_able{
 		}
 		return true;
 	}
+	/*
+	 * Returns the x value where f(x)=0 , only if f(x1)*f(x2)<0 - different sign
+	 * @param x0- start check
+	 * @param x1- end check
+	 * @param eps-minimal distance between x1 and x2
+	 *  @return- a value of X 
+	 */
 
 	@Override
 	public double root(double x0, double x1, double eps) {
 		// TODO Auto-generated method stub
 		if (f(x0)*f(x1)>0) throw new RuntimeException ("this is not a right input, please enter different signs for x0 and x1");
 		if(x0>x1) throw new RuntimeException ("x0 supose to be smaller then x1, please enter again");
-		return Math.round((roothelp( x0, x1,eps))) ;
+		return ((roothelp( x0, x1,eps))) ;
 
 	}
+	/**
+	 * helps with root function
+	 * @param x0
+	 * @param x1
+	 * @param eps
+	 * @return double value
+	 */
 	public double roothelp(double x0, double x1,double eps) {
 
 		if (f(x0)==0) return x0;
 		if(f(x1)==0)return x1;
-		if(Math.abs(x1-x0)<eps&&(f(x1)+eps<0||(f(x0)+eps<0)))
+		
+
+		if((Math.abs(x1-x0)<eps)&&(Math.abs(f(x1))-eps<0||Math.abs(f(x0))-eps<0))
 			return x1;
 
 
@@ -289,22 +389,30 @@ public class Polynom implements Polynom_able{
 
 
 	}
-
-
-
-
+	
+	/**
+	 * Copy this Polynom and returns it
+	 *
+	 */ 
+	 
 
 	@Override
 	public Polynom_able copy() {     
 		// TODO Auto-generated method stub
 		String a=this.toString();
 		Polynom b=new Polynom(a);
+		this.sort();
 		return b;
+
 		
-//		Polynom a=new Polynom(this.toString());
-//		return a;
 
 	}
+	
+	 
+	 /**
+		 * this method returns the derivative Polynom of this
+		 */
+	
 
 	@Override
 	public Polynom_able derivative() {
@@ -316,6 +424,13 @@ public class Polynom implements Polynom_able{
 		}
 		return this;
 	}
+	/*
+	 * calculation the area of this Polynom
+	 * @param x0-start point
+	 * @param x1-end point
+	 * @param eps-how to divide the blocks 
+	 * #area(double, double, double)
+	 */
 
 	@Override
 	public double area(double x0, double x1, double eps) {
@@ -335,12 +450,20 @@ public class Polynom implements Polynom_able{
 		}
 		return areaa;
 	}
+	/*
+	 * A way to go over our Polynom
+	 * 
+	 */
 
 	@Override
 	public Iterator<Monom> iteretor() {
 		// TODO Auto-generated method stub
 		return save.iterator();
 	}
+	/**
+	 * Multiplication of Polynomials
+	 * @param m1- Monom
+	 */
 	@Override
 	public void multiply(Monom m1) {
 		// TODO Auto-generated method stub
@@ -355,6 +478,11 @@ public class Polynom implements Polynom_able{
 
 
 	}
+	/**
+	 * 
+	 * Sort our Polynom by the power of the Monoms 
+	 *
+	 */
 	public class Sortbypower implements Comparator<Monom> {  
 		public int compare(Monom s1,Monom s2){  
 			return(s2.get_power()-s1.get_power());
@@ -365,6 +493,11 @@ public class Polynom implements Polynom_able{
 
 		Collections.sort(save, new Sortbypower());
 	}
+	
+	/*
+	 * @return a String that represent our Polynom
+	 * 
+	 */
 
 
 	public String toString() {
@@ -401,6 +534,9 @@ public class Polynom implements Polynom_able{
 		return answer;
 
 	}
+	/**
+	 * Conectinting Monoms that have the same power, to avoide the same power in one Polynom
+	 */
 
 	public void gather () {
 		sort();
@@ -419,94 +555,23 @@ public class Polynom implements Polynom_able{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	/**
+	 * receives a String and built a type of function from this string
+	 *  @param s -String
+	 *  @return -function that represent this String
+	 * 
+	 */
 
 
 	@Override
 	public function initFromString(String s) {
 		// TODO Auto-generated method stub
-		//function a= helpinit(s);
-		function a=new ComplexFunction();
-		return a=helpinit(s);
+		function answer=new Polynom(s);
+		return answer;
+
 
 
 	}
-	public function helpinit(String s) {
 
-		ComplexFunction answer= new ComplexFunction();
-
-		String before="";
-		int i=0;
-		char move=s.charAt(i);
-		int move2=i;
-		while(move!='('&&move!=s.length()-1) {
-			before=before+move;
-			i++;
-			move=s.charAt(i);
-			move2=i;
-		}
-		System.out.println(move);
-		System.out.println(before);
-		if(move2==s.length()-1) {
-			Polynom x= new Polynom(s);
-			return x;
-
-		}
-		else {
-			if(before.equals("Plus")) {
-				answer.setSign(Operation.Plus);
-
-			}
-			else if(before.equals("Times")) {	
-				answer.setSign(Operation.Times);
-			}
-			else if(before.equals("Divid")) {
-				answer.setSign(Operation.Divid);
-			}
-			else if(before.equals("Max")) {
-				answer.setSign(Operation.Max); 
-			}
-			else if(before.equals("Min")) {
-				answer.setSign(Operation.Min); 
-			}
-			else if(before.equals("Comp")) {
-				answer.setSign(Operation.Comp);
-			}
-			else if(before.equals("None")) {
-				answer.setSign(Operation.None);
-			}
-			else if(before.equals("Error")) {
-				answer.setSign(Operation.Error); 
-			}
-
-			else
-			throw new RuntimeException("this is not a tipe of a complex function-operation is not correct");
-
-
-		}
-		if(s.charAt(s.length()-1)!=')')
-			throw new RuntimeException("this is not a tipe of a complex function-there is not (,) correct");
-		
-		System.out.println(move2+1);
-		System.out.println(s.length()-1);
-
-		s.substring(move2+1, s.length()-1);
-		int counter=0;
-		for(int j=s.length()-1;j>=0;j--) {
-			if((s.charAt(j)==',')&&(counter==0)) {
-				System.out.println(s.substring(0,j-1));
-				System.out.println(s.substring(j+1,s.length()-1));
-				answer.setLeft(helpinit(s.substring(0,j-1)));
-				answer.setRight(helpinit(s.substring(j+1,s.length()-1)));
-			}
-
-			if(s.charAt(j)==')')
-				counter++;
-			if(s.charAt(j)=='(')
-				counter--;
-		}
-	
-	return answer;
-
-}
 }
 

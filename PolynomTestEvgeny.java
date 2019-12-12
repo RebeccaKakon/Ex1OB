@@ -1,5 +1,7 @@
 package myMath;
 
+import java.util.Iterator;
+
 import javax.sound.midi.Synthesizer;
 
 public class PolynomTestEvgeny {
@@ -29,8 +31,7 @@ public class PolynomTestEvgeny {
 				System.out.println("test6 exception");
 				fails = fails + 3;
 			}
-			try {test7();}catch (Exception e) {
-				System.out.println("test7 exception");
+			try {test7();}catch (Exception e) {				System.out.println("test7 exception");
 				fails = fails + 3;
 			}
 			System.out.println("num of fails: " + fails);
@@ -96,7 +97,9 @@ public class PolynomTestEvgeny {
 				for (int j = 0; j < polynoms[i].length; j++) {
 					Monom temp = new Monom(polynoms[i][j]);
 					p1.add(temp);
+					
 				}
+				//System.out.println(p1);
 				if (!compDouble(p1.area(-1, 0, 0.0001), res[i][0]) ) {
 					fails++;
 					System.out.println("area missmatch");
@@ -138,7 +141,8 @@ public class PolynomTestEvgeny {
 
 			substract.substract(p2);
 		
-			if (!add.equals(p3)) {
+			if (!add.equals(p3))
+			{
 				fails++;
 				System.out.println("fail add");
 				System.out.println(add);
@@ -170,7 +174,7 @@ public class PolynomTestEvgeny {
 			Polynom multiply = new Polynom();
 			multiply = (Polynom) p1.copy();
 			multiply.multiply(p2);
-
+			
 			if (!multiply.equals(p3)) {
 				fails++;
 				System.out.println("fail mult");
